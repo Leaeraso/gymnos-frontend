@@ -25,6 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ModeToggle } from "./mode-toggle";
 
 const data = {
   user: {
@@ -81,24 +82,24 @@ const data = {
       title: "Documentation",
       url: "/dashboard/docs",
       icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      // items: [
+      //   {
+      //     title: "Introduction",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Get Started",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Tutorials",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Changelog",
+      //     url: "#",
+      //   },
+      // ],
     },
     {
       title: "Settings",
@@ -160,7 +161,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex justify-center items-center gap-x-1">
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
@@ -172,6 +173,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
               </a>
             </SidebarMenuButton>
+            <ModeToggle />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
