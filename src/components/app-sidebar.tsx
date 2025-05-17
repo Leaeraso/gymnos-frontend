@@ -5,16 +5,12 @@ import {
   BookOpen,
   Bot,
   Command,
-  LifeBuoy,
-  Send,
   Settings,
   Settings2,
   SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-// import { NavProjects } from "@/components/nav-projects";
-import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
@@ -29,131 +25,38 @@ import { ModeToggle } from "./mode-toggle";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "gymnos",
+    email: "gymnos@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
-      title: "Affiliates",
+      title: "Afiliados",
       url: "/dashboard/affiliates",
       icon: SquareTerminal,
       isActive: true,
-      // items: [
-      //   {
-      //     title: "Profiles",
-      //     url: "/profiles",
-      //   },
-      //   {
-      //     title: "Control panel",
-      //     url: "/control-panel",
-      //   },
-      //   {
-      //     title: "Settings",
-      //     url: "/settings",
-      //   },
-      // ],
     },
     {
-      title: "Quotas",
+      title: "Cuotas",
       url: "/dashboard/quotas",
       icon: Bot,
-      // items: [
-      //   {
-      //     title: "Genesis",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Explorer",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Quantum",
-      //     url: "#",
-      //   },
-      // ],
     },
     {
-      title: "Quotas configuration",
+      title: "Configuración de cuota",
       url: "/dashboard/quotas-config",
       icon: Settings,
     },
     {
-      title: "Documentation",
+      title: "Documentación",
       url: "/dashboard/docs",
       icon: BookOpen,
-      // items: [
-      //   {
-      //     title: "Introduction",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Get Started",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Tutorials",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Changelog",
-      //     url: "#",
-      //   },
-      // ],
     },
     {
-      title: "Settings",
+      title: "Configuración",
       url: "/dashboard/settings",
       icon: Settings2,
-      // items: [
-      //   {
-      //     title: "General",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Team",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Billing",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Limits",
-      //     url: "#",
-      //   },
-      // ],
     },
   ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "/dashboard/support",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "/dashboard/feedback",
-      icon: Send,
-    },
-  ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -169,7 +72,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Gymnos</span>
-                  <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -179,8 +81,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
