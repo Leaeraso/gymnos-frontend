@@ -1,6 +1,11 @@
+"use client";
+
 import { LoginForm } from "@/components/login-form"
 import Image from "next/image"
+import { useAuth } from "@/hooks/auth/use-auth"
 export default function LoginPage() {
+
+  const { login, isLoading } = useAuth();
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -11,7 +16,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xl">
-            <LoginForm />
+            <LoginForm onSubmit={login} onLoad={isLoading} />
           </div>
         </div>
       </div>
