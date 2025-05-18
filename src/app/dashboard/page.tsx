@@ -2,7 +2,9 @@ import { verifyAuthToken, removeAuthToken } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 export default async function WelcomePage() {
-  if (await verifyAuthToken()) {
+  const isValidToken = await verifyAuthToken();
+  console.log(isValidToken);
+  if (!await verifyAuthToken()) {
     await removeAuthToken();
     redirect('/login');
   }

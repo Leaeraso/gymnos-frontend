@@ -1,8 +1,8 @@
-import { getCookie } from "cookies-next";
+import { verifyAuthToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-export default function NotFound() {
-    if (getCookie('authToken')) {
+export default async function NotFound() {
+    if (await verifyAuthToken()) {
         redirect("/dashboard");
     }
     redirect("/login");

@@ -1,10 +1,7 @@
-import { getCookie, setCookie, deleteCookie } from 'cookies-next';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { cookies } from 'next/headers';
 
-export const setAuthToken = (token: string, req?: NextApiRequest, res?: NextApiResponse) => {
-    setCookie('authToken', token, {
-        req,
-        res,
+export const setAuthToken = async (token: string) => {
+    (await cookies()).set('authToken', token, {
         maxAge: 60 * 60 * 24 * 7,
         path: '/',
         httpOnly: false,
@@ -12,16 +9,15 @@ export const setAuthToken = (token: string, req?: NextApiRequest, res?: NextApiR
     });
 };
 
-export const removeAuthToken = (req?: NextApiRequest, res?: NextApiResponse) => {
-    deleteCookie('authToken', { req, res, path: '/' });
+export const removeAuthToken = async () => {
+    (await cookies()).delete('authToken');
 };
 
-export const verifyAuthToken = async (req?: NextApiRequest): Promise<boolean> => {
-    const token = await getCookie('authToken', { req });
+export const verifyAuthToken = async (): Promise<boolean> => {
+    const token = (await (cookies())).get('authToken')?.value;
     if (!token) return false;
 
     const payload = JSON.parse(atob(token.split('.')[1]));
     const isExpired = payload.exp * 1000 < Date.now();
-
     return !isExpired;
 };
