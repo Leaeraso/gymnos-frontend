@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthService } from '@/services/auth/auth.service';
 import { toast } from "sonner";
-import { setAuthToken } from '@/lib/auth';
+import Cookie from 'js-cookie';
+import config from '@/config';
 
 export const useAuth = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +16,7 @@ export const useAuth = () => {
         setIsLoading(true);
         try {
             const { token, user } = await AuthService.loginAdmin(credentials);
-            setAuthToken(token);
+            Cookie.set(config.ACCESS_TOKEN_COOKIE_KEY, token);
             router.push('/dashboard');
             toast.success(`Bienvenido, ${user.username}`);
         } catch (error) {

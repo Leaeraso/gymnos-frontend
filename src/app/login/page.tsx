@@ -22,10 +22,10 @@ export default function LoginPage() {
       </div>
       <div className="relative hidden bg-muted lg:block">
         <Image
-          src="/login.jpg"
+          src="/login.webp"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-          layout="fill"
+          fill
         />
       </div>
     </div>

@@ -1,9 +1,6 @@
-import { verifyAuthToken } from "@/lib/auth";
+import config from "@/config";
 import { redirect } from "next/navigation";
 
 export default async function NotFound() {
-    if (await verifyAuthToken()) {
-        redirect("/dashboard");
-    }
-    redirect("/login");
+    redirect(config.PATH_HOME_PAGE);
 }
