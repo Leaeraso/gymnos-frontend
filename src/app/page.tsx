@@ -1,9 +1,6 @@
+import config from "@/config";
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <div>
-      <h1 className="text-3xl font-bold w-full flex justify-center items-center mt-7">
-        Gymnos
-      </h1>
-    </div>
-  );
+  redirect(config.PATH_HOME_PAGE)
 }

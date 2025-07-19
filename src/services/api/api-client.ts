@@ -1,4 +1,4 @@
-import config from "../../config";
+import config from "@/config";
 
 const apiClient = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
     const response = await fetch(`${config.API_URL}${endpoint}`, {
