@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from 'react';
-import { QuotaConfigurationList } from '@/components/quota-configuration-list';
+import { QuotaConfigurationList } from '@/components/quota-configuration/quota-configuration-list';
 import { useQuotaConfigurations } from '@/hooks/use-quota-configurations';
 import { CreateQuotaConfigurationRequest } from '@/types/quota-configuration.type';
 import { Alert, AlertDescription } from '@/components/ui/alert';
