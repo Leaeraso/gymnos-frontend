@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { QuotaConfiguration } from '@/types/quota-configuration.type';
 import { Edit } from 'lucide-react';
+import { useClientDate } from '@/hooks/use-client-date';
 
 interface EditQuotaConfigurationModalProps {
     configuration: QuotaConfiguration;
@@ -35,19 +36,21 @@ export function EditQuotaConfigurationModal({
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [canEdit, setCanEdit] = useState(true);
     const [editReason, setEditReason] = useState<string>('');
+    const currentDate = useClientDate();
 
     useEffect(() => {
+        if (!currentDate) return;
+
         // Validar si se puede editar según las reglas del backend
-        const today = new Date();
         const startDate = new Date(configuration.start_date);
         const lastDayAbleToUpdate = new Date(startDate);
         lastDayAbleToUpdate.setDate(lastDayAbleToUpdate.getDate() + 7);
 
-        const tomorrow = new Date();
+        const tomorrow = new Date(currentDate);
         tomorrow.setDate(tomorrow.getDate() + 1);
 
         // Verificar si pasaron más de 7 días
-        if (lastDayAbleToUpdate < today) {
+        if (lastDayAbleToUpdate < currentDate) {
             setCanEdit(false);
             setEditReason('No se puede editar después de 7 días desde la fecha de inicio');
             return;
@@ -62,7 +65,7 @@ export function EditQuotaConfigurationModal({
 
         setCanEdit(true);
         setEditReason('');
-    }, [configuration]);
+    }, [configuration, currentDate]);
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
@@ -71,9 +74,9 @@ export function EditQuotaConfigurationModal({
             newErrors.fee = 'La cuota debe ser un número positivo';
         }
 
-        if (formData.start_date) {
+        if (formData.start_date && currentDate) {
             const selectedDate = new Date(formData.start_date + 'T00:00:00');
-            const tomorrow = new Date();
+            const tomorrow = new Date(currentDate);
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setHours(0, 0, 0, 0);
 

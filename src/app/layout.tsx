@@ -37,6 +37,7 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
+          storageKey="gymnos-theme"
         >
           {children}
         </ThemeProvider>
