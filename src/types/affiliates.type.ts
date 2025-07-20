@@ -12,7 +12,6 @@ export type Affiliate = {
     updated_at: string,
     paid: boolean,
     __v: number
-    last_quota?: Quota,
     hasPaidLastMonth: boolean
 }
 
