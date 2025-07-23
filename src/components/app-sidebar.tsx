@@ -62,11 +62,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Crear datos del usuario para NavUser
   const userData = user ? {
     name: user.username,
-    email: `${user.username}@gymnos.com`,
     avatar: "/favicon.webp",
   } : {
     name: "Usuario",
-    email: "usuario@gymnos.com",
     avatar: "/favicon.webp",
   };
 
@@ -75,17 +73,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem className="flex justify-center items-center gap-x-1">
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Gymnos</span>
-                </div>
-              </a>
-            </SidebarMenuButton>
-            <ModeToggle />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
