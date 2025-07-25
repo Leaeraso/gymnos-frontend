@@ -17,6 +17,7 @@ export const useAuth = () => {
         try {
             const { token, user } = await AuthService.loginAdmin(credentials);
             Cookie.set(config.ACCESS_TOKEN_COOKIE_KEY, token);
+            localStorage.setItem('gymnos_user', JSON.stringify(user));
             router.push('/dashboard');
             toast.success(`Bienvenido, ${user.username}`);
         } catch (error) {

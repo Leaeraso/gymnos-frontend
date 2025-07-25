@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 import { CreateQuotaConfigurationModal } from './create-quota-configuration-modal';
 import { EditQuotaConfigurationModal } from './edit-quota-configuration-modal';
 import { formatCurrency, formatDate } from '@/lib/utils';
+import { useClientDate } from '@/hooks/use-client-date';
 
 interface QuotaConfigurationListProps {
     configurations: QuotaConfiguration[];
@@ -31,6 +32,7 @@ export function QuotaConfigurationList({
     onCreateConfiguration,
     onUpdateConfiguration,
 }: QuotaConfigurationListProps) {
+    const currentDate = useClientDate();
 
     if (loading && configurations.length === 0) {
         return (
@@ -96,7 +98,7 @@ export function QuotaConfigurationList({
                                             {formatCurrency(config.fee)}
                                         </div>
                                         <div className="text-base font-bold">
-                                            {(config.end_date && config.end_date < new Date()) ? 'Inactiva' : 'Activa'}
+                                            {(config.end_date && currentDate && new Date(config.end_date) < currentDate) ? 'Inactiva' : 'Activa'}
                                         </div>
                                         <div className="mt-2">
                                             <EditQuotaConfigurationModal
