@@ -68,12 +68,12 @@ export function AppSidebarMobile() {
                                     flex flex-col items-center justify-center 
                                     p-3 rounded-xl relative
                                     transition-colors duration-150
-                                    ${isUserMenuOpen ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-accent"}
+                                    ${isUserMenuOpen ? "text-primary font-semibold bg-muted" : "text-white hover:bg-accent"}
                                     text-primary
                                 `}
                                 aria-label={item.title}
                             >
-                                <item.icon className="size-6" />
+                                <item.icon className={`size-6 ${isUserMenuOpen ? "text-primary" : "text-white"}`} />
                             </button>
                         ) : (
                             <Link
@@ -83,11 +83,11 @@ export function AppSidebarMobile() {
                                     flex flex-col items-center justify-center 
                                     p-3 rounded-xl
                                     transition-colors duration-150
-                                    ${active ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-accent"}
+                                    ${active ? "text-primary font-semibold bg-muted" : "text-white hover:bg-accent"}
                                 `}
                                 aria-label={item.title}
                             >
-                                <item.icon className="size-6" />
+                                <item.icon className={`size-6 ${active ? "text-primary" : "text-white"}`} />
                             </Link>
                         );
                     })}

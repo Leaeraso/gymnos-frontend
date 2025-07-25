@@ -2,13 +2,14 @@
 
 import { Dumbbell, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Cookie from "js-cookie";
 import config from "@/config";
 import { menuItems } from "@/app/dashboard/layout";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     Cookie.remove(config.ACCESS_TOKEN_COOKIE_KEY);
@@ -40,20 +41,23 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    className="group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium transition-colors duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[active=true]:bg-primary/90 data-[active=true]:text-primary-foreground"
-                  >
-                    <a href={item.url} className="flex items-center gap-3 w-full">
-                      <item.icon className="size-5 opacity-80 group-hover:opacity-100 transition-opacity" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {menuItems.map((item) => {
+                const active = pathname === item.url;
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium transition-colors duration-150 ${active ? "text-primary font-semibold bg-muted" : "text-white hover:bg-accent"}`}
+                    >
+                      <a href={item.url} className="flex items-center gap-3 w-full">
+                        <item.icon className={`size-5 opacity-80 group-hover:opacity-100 transition-opacity ${active ? "text-primary" : "text-white"}`} />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
