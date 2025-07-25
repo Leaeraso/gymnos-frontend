@@ -1,28 +1,11 @@
 "use client";
 
-import { Users, CreditCard, Settings, HelpCircle, ChevronDown, Dumbbell, LogOut } from "lucide-react";
+import { Dumbbell, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
 import Cookie from "js-cookie";
 import config from "@/config";
-
-const menuItems = [
-  {
-    title: "Afiliados",
-    url: "/dashboard/affiliates",
-    icon: Users,
-  },
-  {
-    title: "Cuotas",
-    url: "/dashboard/quotas",
-    icon: CreditCard,
-  },
-  {
-    title: "Configuración de cuotas",
-    url: "/dashboard/quotas-config",
-    icon: Settings,
-  },
-];
+import { menuItems } from "@/app/dashboard/layout";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const router = useRouter();
