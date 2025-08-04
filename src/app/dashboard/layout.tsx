@@ -1,9 +1,10 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { AppSidebarMobile } from "@/components/sidebar/app-sidebar-mobile";
-import { Users, CreditCard, Settings } from "lucide-react";
+import { Users, Settings, DollarSign } from "lucide-react";
+import { MenuItems } from "@/types/sidebar.types";
 
-export const menuItems = [
+export const menuItems: MenuItems[] = [
   {
     title: "Afiliados",
     url: "/dashboard/affiliates",
@@ -12,7 +13,7 @@ export const menuItems = [
   {
     title: "Cuotas",
     url: "/dashboard/quotas",
-    icon: CreditCard,
+    icon: DollarSign,
   },
   {
     title: "Configuración de cuotas",

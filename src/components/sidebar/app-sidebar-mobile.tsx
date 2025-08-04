@@ -5,25 +5,18 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { menuItems } from "@/app/dashboard/layout";
 import { Dumbbell, LogOut } from "lucide-react";
-import Cookie from "js-cookie";
-import config from "@/config";
-import { useRouter } from "next/navigation";
+import { MenuItems } from "@/types/sidebar.types";
+import { useLogout } from "@/hooks/auth/use-logout";
 
 export function AppSidebarMobile() {
     const isMobile = useIsMobile();
     const pathname = usePathname();
-    const router = useRouter();
+    const logout = useLogout();
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-    const handleLogout = () => {
-        Cookie.remove(config.ACCESS_TOKEN_COOKIE_KEY);
-        localStorage.removeItem("gymnos_user");
-        router.push("/login");
-    };
 
     if (!isMobile) return null;
 
-    const allMenuItems: Array<{ title: string; url: string; icon: any; isUserMenu?: boolean }> = [
+    const allMenuItems: MenuItems[] = [
         {
             title: "Usuario",
             url: "#",
@@ -45,7 +38,7 @@ export function AppSidebarMobile() {
                         flex items-center w-full p-3 space-x-3
                         hover:bg-accent transition-colors text-red-500
                     "
-                        onClick={handleLogout}
+                        onClick={logout}
                     >
                         <LogOut className="size-5" />
                         <span className="text-sm">Cerrar sesión</span>

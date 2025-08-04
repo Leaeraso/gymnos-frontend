@@ -2,20 +2,13 @@
 
 import { Dumbbell, LogOut } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useRouter, usePathname } from "next/navigation";
-import Cookie from "js-cookie";
-import config from "@/config";
+import { usePathname } from "next/navigation";
 import { menuItems } from "@/app/dashboard/layout";
+import { useLogout } from "@/hooks/auth/use-logout";
 
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
-  const router = useRouter();
   const pathname = usePathname();
-
-  const handleLogout = () => {
-    Cookie.remove(config.ACCESS_TOKEN_COOKIE_KEY);
-    localStorage.removeItem("gymnos_user");
-    router.push("/login");
-  };
+  const logout = useLogout();
 
   return (
     <Sidebar className="border-r-0 bg-sidebar-background text-sidebar-foreground" variant="inset" {...props}>
@@ -68,7 +61,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               tooltip="Cerrar sesión"
               className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-[15px] font-medium transition-colors duration-150 hover:bg-destructive hover:text-destructive-foreground"
-              onClick={handleLogout}
+              onClick={logout}
             >
               <LogOut className="size-5 opacity-80 group-hover:opacity-100 transition-opacity" />
               <span>Cerrar sesión</span>

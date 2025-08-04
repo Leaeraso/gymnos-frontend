@@ -3,15 +3,7 @@
 import { useState, useEffect } from 'react';
 import Cookie from 'js-cookie';
 import config from '@/config';
-
-export type CurrentUser = {
-    _id: string;
-    username: string;
-    role: {
-        _id: string;
-        name: string;
-    };
-};
+import { CurrentUser } from '@/types/user.type';
 
 export const useCurrentUser = () => {
     const [user, setUser] = useState<CurrentUser | null>(null);
