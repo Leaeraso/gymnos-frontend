@@ -68,20 +68,7 @@ export function EditQuotaConfigurationModal({
         }
     };
 
-    if (!canEdit) {
-        return (
-            <Button
-                variant="outline"
-                size="sm"
-                disabled
-                title={editReason}
-            >
-                <Edit className="h-4 w-4" />
-            </Button>
-        );
-    }
-
-    return (
+    return canEdit ? (
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -146,5 +133,14 @@ export function EditQuotaConfigurationModal({
                 </form>
             </DialogContent>
         </Dialog>
+    ) : (
+        <Button
+            variant="outline"
+            size="sm"
+            disabled
+            title={editReason}
+        >
+            <Edit className="h-4 w-4" />
+        </Button>
     );
 }

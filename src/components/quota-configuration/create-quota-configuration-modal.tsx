@@ -57,7 +57,6 @@ export function CreateQuotaConfigurationModal({
         }
 
         try {
-            // Agregar hora 00:00:00 a la fecha seleccionada
             const dateWithTime = new Date(formData.start_date + 'T00:00:00');
 
             await onSubmit({
@@ -69,13 +68,11 @@ export function CreateQuotaConfigurationModal({
             setErrors({});
             setOpen(false);
         } catch {
-            // El error se maneja en el componente padre
         }
     };
 
     const handleInputChange = (field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-        // Limpiar error del campo cuando el usuario empiece a escribir
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
         }
@@ -84,7 +81,6 @@ export function CreateQuotaConfigurationModal({
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
         if (!newOpen) {
-            // Limpiar formulario al cerrar
             setFormData({ fee: '', start_date: '' });
             setErrors({});
         }

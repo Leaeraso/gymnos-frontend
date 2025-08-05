@@ -8,6 +8,7 @@ import { CreateQuotaConfigurationModal } from './create-quota-configuration-moda
 import { EditQuotaConfigurationModal } from './edit-quota-configuration-modal';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { useClientDate } from '@/hooks/use-client-date';
+import { NotElementsFound } from '../not-elements-found';
 
 interface QuotaConfigurationListProps {
     configurations: QuotaConfiguration[];
@@ -33,24 +34,21 @@ export function QuotaConfigurationList({
     onUpdateConfiguration,
 }: QuotaConfigurationListProps) {
     const currentDate = useClientDate();
+    const isLoadingMore = loading && configurations.length > 0;
 
-    if (loading && configurations.length === 0) {
-        return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Configuraciones de Cuotas</CardTitle>
-                    <CardDescription>Cargando configuraciones...</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex items-center justify-center py-8">
-                        <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
-                    </div>
-                </CardContent>
-            </Card>
-        );
-    }
-
-    return (
+    return isLoadingMore ? (
+        <Card>
+            <CardHeader>
+                <CardTitle>Configuraciones de Cuotas</CardTitle>
+                <CardDescription>Cargando configuraciones...</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="flex items-center justify-center py-8">
+                    <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+            </CardContent>
+        </Card>
+    ) : (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
@@ -68,9 +66,7 @@ export function QuotaConfigurationList({
             </CardHeader>
             <CardContent>
                 {configurations.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
-                        No hay configuraciones de cuotas disponibles
-                    </div>
+                    NotElementsFound('No hay configuraciones de cuotas disponibles')
                 ) : (
                     <div className="space-y-4">
                         <div className="grid gap-4">
