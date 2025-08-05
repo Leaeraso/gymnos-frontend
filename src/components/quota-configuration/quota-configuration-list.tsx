@@ -34,7 +34,7 @@ export function QuotaConfigurationList({
     onUpdateConfiguration,
 }: QuotaConfigurationListProps) {
     const currentDate = useClientDate();
-    const isLoadingMore = loading && configurations.length > 0;
+    const isLoadingMore = loading && configurations.length >= 0;
 
     return isLoadingMore ? (
         <Card>

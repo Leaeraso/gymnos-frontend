@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { CreateQuotaConfigurationRequest } from '@/types/quota-configuration.type';
 import { Plus } from 'lucide-react';
+import { validateForm } from '@/hooks/quota-configuration/use-create-quota-configurations';
 
 interface CreateQuotaConfigurationModalProps {
     onSubmit: (data: CreateQuotaConfigurationRequest) => Promise<void>;
@@ -32,27 +33,10 @@ export function CreateQuotaConfigurationModal({
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const validateForm = () => {
-        const newErrors: Record<string, string> = {};
-
-        if (!formData.fee) {
-            newErrors.fee = 'La cuota es requerida';
-        } else if (isNaN(Number(formData.fee)) || Number(formData.fee) <= 0) {
-            newErrors.fee = 'La cuota debe ser un número positivo';
-        }
-
-        if (!formData.start_date) {
-            newErrors.start_date = 'La fecha de inicio es requerida';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!validateForm()) {
+        if (!validateForm(formData, setErrors)) {
             return;
         }
 

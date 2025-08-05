@@ -10,3 +10,7 @@ export interface CreateQuotaConfigurationRequest {
     fee: number;
     start_date: string; // ISO string format
 }
+
+export interface CreateQuotaConfigurationFormData extends Pick<CreateQuotaConfigurationRequest, 'start_date'> {
+    fee: string;
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { QuotaConfigurationList } from '@/components/quota-configuration/quota-configuration-list';
 import { useQuotaConfigurations } from '@/hooks/quota-configuration/use-quota-configurations';
 import { CreateQuotaConfigurationRequest } from '@/types/quota-configuration.type';
@@ -17,38 +17,33 @@ export default function QuotasConfiguration() {
     updateConfiguration,
   } = useQuotaConfigurations();
 
-  // Cargar configuraciones al montar el componente
   useEffect(() => {
     fetchConfigurations();
   }, [fetchConfigurations]);
 
-  const handleCreateConfiguration = useCallback(async (data: CreateQuotaConfigurationRequest) => {
+  const handleCreateConfiguration = async (data: CreateQuotaConfigurationRequest) => {
     try {
       await createConfiguration(data);
-      // Recargar la lista después de crear
       fetchConfigurations();
     } catch {
-      // El error ya se maneja en el hook
     }
-  }, [createConfiguration, fetchConfigurations]);
+  };
 
-  const handleUpdateConfiguration = useCallback(async (id: string, data: { fee?: number; start_date?: string }) => {
+  const handleUpdateConfiguration = async (id: string, data: { fee?: number; start_date?: string }) => {
     try {
       await updateConfiguration(id, data);
-      // Recargar la lista después de actualizar
       fetchConfigurations();
     } catch {
-      // El error ya se maneja en el hook
     }
-  }, [updateConfiguration, fetchConfigurations]);
+  };
 
-  const handlePageChange = useCallback((page: number) => {
+  const handlePageChange = (page: number) => {
     fetchConfigurations(page);
-  }, [fetchConfigurations]);
+  };
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = () => {
     fetchConfigurations(pagination.page);
-  }, [fetchConfigurations, pagination.page]);
+  };
 
   return (
     <div className="container mx-auto p-6 space-y-6">
