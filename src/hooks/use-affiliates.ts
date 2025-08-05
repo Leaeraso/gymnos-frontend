@@ -1,6 +1,5 @@
-import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { AffiliateResponse, affiliateService } from "@/services/afiiliate.service";
-import { QueryParams } from "@/types/queryParams.type";
 import { useState } from "react";
 
 export const useAffiliates = () => {

@@ -12,15 +12,14 @@ import { AffiliateState } from "./affiliate-state";
 import { Eye, Mars, Pencil, Trash, Venus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAffiliates } from "@/hooks/use-affiliates";
-import { Pagination } from "./ui/pagination";
 import { PaginationBuilder } from "./pagination-builder";
+import { calculateTotalPages } from "@/utils/pagination.utils";
 
 export function AffiliatesTable() {
   const { data, isLoading, isError, page, setPage } = useAffiliates()
 
   const affiliates = data?.data ?? []
-
-  const totalPages = Math.ceil(data?.paginate?.total! / (data?.paginate?.pageSize ?? 10))
+  const totalPages = calculateTotalPages(data?.paginate?.total!, data?.paginate?.pageSize)
 
   return (
     <>
