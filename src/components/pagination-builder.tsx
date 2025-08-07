@@ -1,53 +1,81 @@
+import { getPageNumbers } from "@/utils/pagination.utils";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./ui/pagination";
 
 type Props = {
-    page: number | 1
-    totalPages: number | 1,
+    page: number
+    totalPages: number,
     setPage: (page: number) => void
 }
 
 export function PaginationBuilder({ page, totalPages, setPage }: Props) {
+    const pages = getPageNumbers(page, totalPages)
 
-    const goToPage = (page: number) => {
-        if(page >= 1 && page <= totalPages) setPage(page)
+    const goToPage = (n: number) => {
+        if(n >= 1 && n <= totalPages) setPage(n)
     }
+
+    const isDisabled = totalPages < 2
+
     return (
         <Pagination>
-            <PaginationContent>
-                {
-                    page > 1 && (
-                        <>
-                        <PaginationItem>
-                            <PaginationPrevious onClick={() => goToPage(page - 1)} className="cursor-pointer"/>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink onClick={() => goToPage(page - 1)} className="cursor-pointer">{page - 1}</PaginationLink>
-                        </PaginationItem>
-                        </>
-                    )
-                }
-                
+            <PaginationContent className="gap-2">
                 <PaginationItem>
-                    <PaginationLink isActive className="cursor-pointer">{page}</PaginationLink>
+                    <PaginationPrevious 
+                        onClick={isDisabled ? undefined : () => goToPage(page - 1)} 
+                        className={`${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                    />
                 </PaginationItem>
+
                 {
-                    page < (totalPages - 1) && (
+                    pages[0] > 1 && (
                         <>
-                        <PaginationItem>
-                            <PaginationLink onClick={() => goToPage(page + 1)} className="cursor-pointer">{page + 1}</PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationEllipsis/>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationLink onClick={() => goToPage(page + 2)} className="cursor-pointer">{page + 2}</PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem>
-                            <PaginationNext onClick={() => goToPage(page + 1)} className="cursor-pointer"/>
-                        </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink onClick={() => goToPage(1)} className="cursor-pointer">1</PaginationLink>
+                            </PaginationItem>
+                            {
+                                pages[0] > 2 && (
+                                    <PaginationItem>
+                                        <PaginationEllipsis/>
+                                    </PaginationItem>
+                                )
+                            }
                         </>
                     )
                 }
+
+                {
+                    pages.map((p: number) => (
+                        <PaginationItem key={p}>
+                            <PaginationLink onClick={() => goToPage(p)} isActive={p === page} className="cursor-pointer">
+                                {p}
+                            </PaginationLink>
+                        </PaginationItem>
+                    ))
+                }
+
+                {
+                    pages[pages.length - 1] < totalPages && (
+                        <>
+                            {pages[pages.length - 1] < totalPages - 1 && (
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                            )}
+                            <PaginationItem>
+                                <PaginationLink onClick={() => goToPage(totalPages)} className="cursor-pointer">
+                                    {totalPages}
+                                </PaginationLink>
+                            </PaginationItem>
+                        </>
+                    )
+                }
+
+                <PaginationItem>
+                    <PaginationNext 
+                        onClick={isDisabled ? undefined : () => goToPage(page + 1)} 
+                        className={`${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                    />
+                </PaginationItem>
             </PaginationContent>
         </Pagination>
     )

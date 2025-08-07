@@ -9,11 +9,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AffiliateState } from "./affiliate-state";
-import { Eye, Mars, Pencil, Trash, Venus } from "lucide-react";
+import { ArrowUpDown, Eye, Mars, Pencil, Plus, Trash, Venus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAffiliates } from "@/hooks/use-affiliates";
 import { PaginationBuilder } from "./pagination-builder";
 import { calculateTotalPages } from "@/utils/pagination.utils";
+import { Input } from "./ui/input";
 
 export function AffiliatesTable() {
   const { data, isLoading, isError, page, setPage } = useAffiliates()
@@ -23,63 +24,87 @@ export function AffiliatesTable() {
 
   return (
     <>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>N° afiliado</TableHead>
-          <TableHead>Nombre completo</TableHead>
-          <TableHead>Fecha Nacimiento</TableHead>
-          <TableHead>Documento</TableHead>
-          <TableHead>Estado</TableHead>
-          <TableHead>Acciones</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {affiliates.map((affiliate) => {
-          const normalizedDob = affiliate.date_of_birth
-            .slice(0, 10)
-            .replace(/-/g, "/");
+    <div className="overflow-x-auto w-full">
+      <div className="flex items-center py-4 flex-row justify-between">
+        <Input
+          placeholder="Buscar afiliado..."
+          className="max-w-sm"
+        />
+        <Button variant="outline" className="cursor-pointer">
+          <Plus className="w-4 h-4" />
+          Agregar afiliado
+        </Button>
+      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-left">N° afiliado</TableHead>
+            <TableHead className="text-center">
+              <Button
+                variant="ghost"
+                onClick={() => {}}
+              >
+                Nombre completo
+                <ArrowUpDown className="w-4 h-4" />
+              </Button>
+            </TableHead>
+            <TableHead className="text-center">Fecha Nacimiento</TableHead>
+            <TableHead className="text-center">Documento</TableHead>
+            <TableHead className="text-center">Estado</TableHead>
+            <TableHead className="text-right">Acciones</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {affiliates.map((affiliate) => {
+            const normalizedDob = affiliate.date_of_birth
+              .slice(0, 10)
+              .replace(/-/g, "/");
 
-          return (
-            <TableRow key={affiliate.affiliate_number}>
-              <TableCell>{affiliate.affiliate_number}</TableCell>
-              <TableCell>
-                <div className="flex gap-x-1 flex-row">
-                  <span>
-                    {affiliate.sex === "Woman" ? (
-                      <Venus className="w-5 h-5" />
-                    ) : (
-                      <Mars className="w-5 h-5" />
-                    )}
-                  </span>
-                  <span>{affiliate.name + " " + affiliate.last_name}</span>
-                </div>
-              </TableCell>
-              <TableCell>{normalizedDob}</TableCell>
-              <TableCell>{affiliate.dni}</TableCell>
-              <TableCell>
-                <AffiliateState state={affiliate.paid} />
-              </TableCell>
-              <TableCell className="flex gap-x-2">
-                <Button variant="outline" size="icon">
-                  <Eye className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="icon">
-                  <Pencil className="w-4 h-4" />
-                </Button>
-                <Button variant="outline" size="icon">
-                  <Trash className="w-4 h-4" />
-                </Button>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+            return (
+              <TableRow key={affiliate.affiliate_number}>
+                <TableCell className="text-left">{affiliate.affiliate_number}</TableCell>
+                <TableCell className="text-center">
+                  <div className="flex gap-x-1 flex-row justify-center">
+                    <span>
+                      {affiliate.sex === "Woman" ? (
+                        <Venus className="w-5 h-5" />
+                      ) : (
+                        <Mars className="w-5 h-5" />
+                      )}
+                    </span>
+                    <span>{affiliate.name + " " + affiliate.last_name}</span>
+                  </div>
+                </TableCell>
+                <TableCell className="text-center">{normalizedDob}</TableCell>
+                <TableCell className="text-center">{affiliate.dni}</TableCell>
+                <TableCell className="text-center">
+                  <AffiliateState state={affiliate.paid} />
+                </TableCell>
+                <TableCell className="flex gap-x-2 justify-end">
+                  <Button variant="outline" size="icon" className="cursor-pointer">
+                    <Eye className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="cursor-pointer">
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="cursor-pointer">
+                    <Trash className="w-4 h-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
 
-        <div className="mt-4">
-          <PaginationBuilder page={page} totalPages={totalPages} setPage={setPage}/>
-        </div>
-    </>
+      {
+        affiliates.length > 0 && (
+          <div className="mt-4">
+            <PaginationBuilder page={page} totalPages={totalPages} setPage={setPage}/>
+          </div>
+        )
+      }
+    </> 
   );
 }
