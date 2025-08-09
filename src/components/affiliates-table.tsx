@@ -9,12 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AffiliateState } from "./affiliate-state";
-import { ArrowUpDown, Eye, Mars, Pencil, Plus, Trash, Venus } from "lucide-react";
+import { ArrowUpDown, Eye, Mars, Pencil, Trash, Venus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAffiliates } from "@/hooks/use-affiliates";
 import { PaginationBuilder } from "./pagination-builder";
 import { calculateTotalPages } from "@/utils/pagination.utils";
 import { Input } from "./ui/input";
+import { AffiliateSex } from "@/types/affiliates.type";
+import { AffiliateModal } from "./affiliate-modal";
 
 export function AffiliatesTable() {
   const { data, isLoading, isError, page, setPage } = useAffiliates()
@@ -30,10 +32,7 @@ export function AffiliatesTable() {
           placeholder="Buscar afiliado..."
           className="max-w-sm"
         />
-        <Button variant="outline" className="cursor-pointer">
-          <Plus className="w-4 h-4" />
-          Agregar afiliado
-        </Button>
+        <AffiliateModal />
       </div>
       <Table>
         <TableHeader>
@@ -66,7 +65,7 @@ export function AffiliatesTable() {
                 <TableCell className="text-center">
                   <div className="flex gap-x-1 flex-row justify-center">
                     <span>
-                      {affiliate.sex === "Woman" ? (
+                      {affiliate.sex === AffiliateSex.Woman ? (
                         <Venus className="w-5 h-5" />
                       ) : (
                         <Mars className="w-5 h-5" />

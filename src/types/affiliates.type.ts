@@ -15,3 +15,7 @@ export type Affiliate = {
     hasPaidLastMonth: boolean
 }
 
+export enum AffiliateSex {
+    Man = "Man",
+    Woman = "Woman"
+}
