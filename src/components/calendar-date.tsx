@@ -6,6 +6,7 @@ import { CalendarIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
@@ -13,31 +14,25 @@ import {
 } from "@/components/ui/popover"
 
 function formatDate(date: Date | undefined) {
-  if (!date) return ""
-  const y = date.getFullYear()
-  const m = String(date.getMonth() + 1).padStart(2, "0")
-  const d = String(date.getDate()).padStart(2, "0")
-  return `${y}/${m}/${d}`
-}
-
-function parseYYYYMMDD(value: string): Date | undefined {
-  const match = value.match(/^(\d{4})\/(\d{2})\/(\d{2})$/)
-  if (!match) return undefined
-  const year = Number(match[1])
-  const month = Number(match[2])
-  const day = Number(match[3])
-  const date = new Date(year, month - 1, day)
-  if (
-    date.getFullYear() !== year ||
-    date.getMonth() !== month - 1 ||
-    date.getDate() !== day
-  ) {
-    return undefined
+  if (!date) {
+    return ""
   }
-  return date
+
+  return date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
 }
 
-export function Calendar28() {
+function isValidDate(date: Date | undefined) {
+  if (!date) {
+    return false
+  }
+  return !isNaN(date.getTime())
+}
+
+export function CalendarDate() {
   const [open, setOpen] = React.useState(false)
   const [date, setDate] = React.useState<Date | undefined>(
     new Date("2025-06-01")
@@ -51,15 +46,14 @@ export function Calendar28() {
         <Input
           id="date"
           value={value}
-          placeholder="YYYY/MM/DD"
+          placeholder="June 01, 2025"
           className="bg-background pr-10"
           onChange={(e) => {
-            const v = e.target.value
-            setValue(v)
-            const parsed = parseYYYYMMDD(v)
-            if (parsed) {
-              setDate(parsed)
-              setMonth(parsed)
+            const date = new Date(e.target.value)
+            setValue(e.target.value)
+            if (isValidDate(date)) {
+              setDate(date)
+              setMonth(date)
             }
           }}
           onKeyDown={(e) => {

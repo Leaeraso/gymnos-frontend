@@ -16,6 +16,7 @@ export type Affiliate = {
 }
 
 export enum AffiliateSex {
-    Man = "Man",
-    Woman = "Woman"
+    Man = "Hombre",
+    Woman = "Mujer",
+    Other = "Otro"
 }

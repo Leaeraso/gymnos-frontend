@@ -3,7 +3,9 @@ import { Button } from "./ui/button";
 import { Calendar, Plus } from "lucide-react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { Calendar28 } from "./ui/calendar-28";
+import { CalendarDate } from "./calendar-date";
+import { SelectBuilder } from "./select-builder";
+import { AffiliateSex } from "@/types/affiliates.type";
 
 export function AffiliateModal() {
     return (
@@ -26,23 +28,23 @@ export function AffiliateModal() {
                     <div className="grid gap-4">
                         <div className="grid gap-3">
                             <Label htmlFor="name">Nombre</Label>
-                            <Input id="name" name="name" defaultValue="Juan" />
+                            <Input id="name" name="name" placeholder="Juan" />
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="lastname">Apellido</Label>
-                            <Input id="lastname" name="lastname" defaultValue="Pérez" />
+                            <Input id="lastname" name="lastname" placeholder="Pérez" />
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="birthdate">Fecha de nacimiento</Label>
-                            <Calendar28 />
+                            <CalendarDate/>
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="document">Documento</Label>
-                            <Input id="document" name="document" defaultValue="24567232" />
+                            <Input id="document" name="document" placeholder="24567232" />
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="sex">Sexo</Label>
-                            {/* Select */}
+                            <SelectBuilder options={AffiliateSex} placeholder="Seleccionar sexo"/>
                         </div>
                     </div>
                     <DialogFooter>
