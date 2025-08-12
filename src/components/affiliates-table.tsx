@@ -32,7 +32,7 @@ export function AffiliatesTable() {
           placeholder="Buscar afiliado..."
           className="max-w-sm"
         />
-        <AffiliateModal />
+        <AffiliateModal isLoading={isLoading}/>
       </div>
       <Table>
         <TableHeader>

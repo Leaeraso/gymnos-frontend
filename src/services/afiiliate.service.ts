@@ -1,6 +1,7 @@
 import { QueryParams } from '@/types/queryParams.type'
 import apiClient from './api/api.client'
-import { Affiliate } from '@/types/affiliates.type'
+import { Affiliate, AffiliateInputForm } from '@/types/affiliates.type'
+import config from '@/config'
 
 export type AffiliateResponse = {
   data: Affiliate[]
@@ -14,10 +15,17 @@ export type AffiliateResponse = {
 
 export const affiliateService = {
   getAffiliate: async (queryParams?: QueryParams): Promise<AffiliateResponse> => {
-    return apiClient<AffiliateResponse>('/affiliates', {
+    return apiClient<AffiliateResponse>(config.AFFILIATE_PATH, {
       method: 'GET',
     })
   },
+
+  createAffiliate: async (data: AffiliateInputForm): Promise<Affiliate> => {
+    return apiClient<Affiliate>(config.AFFILIATE_PATH, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  }
 
 }
 

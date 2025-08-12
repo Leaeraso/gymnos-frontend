@@ -1,5 +1,3 @@
-import { Quota } from "./quotas.type."
-
 export type Affiliate = {
     _id: string,
     affiliate_number: number,
@@ -13,6 +11,14 @@ export type Affiliate = {
     paid: boolean,
     __v: number
     hasPaidLastMonth: boolean
+}
+
+export type AffiliateInputForm = {
+    name: string,
+    lastname: string,
+    date_of_birth: string,
+    dni: number,
+    sex: AffiliateSex
 }
 
 export enum AffiliateSex {
