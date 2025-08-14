@@ -19,11 +19,15 @@ import { AffiliateSex } from "@/types/affiliates.type";
 import { AffiliateModal } from "./affiliate-modal";
 
 export function AffiliatesTable() {
-  const { data, isLoading, isError, page, setPage } = useAffiliates()
+  const { data, isLoading, isFetching, queryParams, setQueryParams } = useAffiliates()
 
   const affiliates = data?.data ?? []
   const totalPages = calculateTotalPages(data?.paginate?.total!, data?.paginate?.pageSize)
 
+  const handlePageChange = (page: number) => {
+    setQueryParams({...queryParams, page})
+  }
+ 
   return (
     <>
     <div className="overflow-x-auto w-full">
@@ -32,7 +36,7 @@ export function AffiliatesTable() {
           placeholder="Buscar afiliado..."
           className="max-w-sm"
         />
-        <AffiliateModal isLoading={isLoading}/>
+        <AffiliateModal isLoading={isLoading} isFetching={isFetching}/>
       </div>
       <Table>
         <TableHeader>
@@ -100,7 +104,7 @@ export function AffiliatesTable() {
       {
         affiliates.length > 0 && (
           <div className="mt-4">
-            <PaginationBuilder page={page} totalPages={totalPages} setPage={setPage}/>
+            <PaginationBuilder page={queryParams.page} totalPages={totalPages} setPage={handlePageChange}/>
           </div>
         )
       }

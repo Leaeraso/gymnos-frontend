@@ -12,10 +12,11 @@ import { affiliateService } from "@/services/afiiliate.service";
 import { ClipLoader } from "react-spinners";
 
 interface AffiliateModalProps {
-    isLoading: boolean
+    isLoading: boolean,
+    isFetching: boolean
 }
 
-export function AffiliateModal({isLoading}: AffiliateModalProps) {
+export function AffiliateModal({isFetching}: AffiliateModalProps) {
     const {
         register,
         handleSubmit,
@@ -35,6 +36,7 @@ export function AffiliateModal({isLoading}: AffiliateModalProps) {
 
     const onSubmit = async (data: AffiliateInputForm) => {
         try {
+            console.log('creating affiliate...')
             await affiliateService.createAffiliate(data);
 
             reset()
@@ -99,7 +101,7 @@ export function AffiliateModal({isLoading}: AffiliateModalProps) {
                                 <Button variant="outline">Cancelar</Button>
                             </DialogClose>
                             <Button type="submit" className="outline cursor-pointer text-white">
-                                {isLoading ? <ClipLoader color="#fff" size={20} aria-label="Cargando..." data-testid="loading-spinner"/> : 'Agregar afiliado'}
+                                {isFetching ? <ClipLoader color="#fff" size={20} aria-label="Cargando..." data-testid="loading-spinner"/> : 'Agregar afiliado'}
                             </Button>
                         </DialogFooter>
                     </DialogContent>

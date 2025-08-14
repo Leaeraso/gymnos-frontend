@@ -17,7 +17,7 @@ export const affiliateService = {
   getAffiliate: async (queryParams?: QueryParams): Promise<AffiliateResponse> => {
     return apiClient<AffiliateResponse>(config.AFFILIATE_PATH, {
       method: 'GET',
-    })
+    }, queryParams)
   },
 
   createAffiliate: async (data: AffiliateInputForm): Promise<Affiliate> => {
