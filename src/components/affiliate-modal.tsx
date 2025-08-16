@@ -27,6 +27,7 @@ export function AffiliateModal({isFetching}: AffiliateModalProps) {
     } = useForm<AffiliateInputForm>()
 
     const handleDateChange = (date: string) => {
+        console.log('Fecha de nacimiento seleccionada',date)
         setValue('date_of_birth', date)
     }
 
@@ -52,7 +53,7 @@ export function AffiliateModal({isFetching}: AffiliateModalProps) {
         <>
             <Dialog>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogTrigger>
+                    <DialogTrigger asChild>
                         <Button variant="outline" className="cursor-pointer">
                             <Plus className="w-4 h-4" />
                             Agregar afiliado

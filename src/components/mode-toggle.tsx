@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function ModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
-
+  
   const isDark = resolvedTheme === "dark";
 
   const toggleTheme = () => {

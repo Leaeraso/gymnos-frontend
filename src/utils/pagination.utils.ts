@@ -14,3 +14,20 @@ export const getPageNumbers = (page: number, totalPages: number) => {
     
     return pages
 }
+
+export const normalizeDate = (date: string | undefined) => {
+    if(date === undefined) {
+        return 'Fecha no disponible'
+    }
+
+    return date.slice(0, 10)
+        .replace(/-/g, "/")
+}
+
+export const normalizeFullName = (name: string | undefined, lastName: string | undefined) => {
+    if(name === undefined) {
+        return 'Nombre no disponible'
+    }
+
+    return `${name} ${lastName ?? ''}`
+}
