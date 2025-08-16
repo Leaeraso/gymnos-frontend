@@ -13,7 +13,7 @@ export const useAffiliates = () => {
     })
 
   const { isLoading, isFetching, isError, data, isPending, error } = useQuery<AffiliateResponse>({
-    queryKey: ['affiliates', queryParams.page],
+    queryKey: ['affiliates', queryParams],
     queryFn: () => affiliateService.getAffiliate(queryParams),
     placeholderData: keepPreviousData,
   });

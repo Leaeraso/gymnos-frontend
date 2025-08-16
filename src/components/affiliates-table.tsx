@@ -59,9 +59,10 @@ export function AffiliatesTable() {
         </TableHeader>
         <TableBody>
           {affiliates.map((affiliate) => {
+            console.log(affiliate);
             const normalizedDob = affiliate.date_of_birth
               .slice(0, 10)
-              .replace(/-/g, "/");
+              .replace(/-/g, "/") ?? 'Fecha no disponible';
 
             return (
               <TableRow key={affiliate.affiliate_number}>
