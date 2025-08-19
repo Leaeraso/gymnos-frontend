@@ -19,6 +19,7 @@ export default function Providers({ children }: Props) {
         defaultTheme="dark"
         enableSystem
         disableTransitionOnChange
+        storageKey="gymnos-theme"
       >
         {children}
         <Toaster position="bottom-right" reverseOrder={false} />

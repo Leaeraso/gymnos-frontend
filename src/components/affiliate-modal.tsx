@@ -5,29 +5,29 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { CalendarDate } from "./calendar-date";
 import { SelectBuilder } from "./select-builder";
-import { AffiliateInputForm, AffiliateSex } from "@/types/affiliates.type";
+import { Affiliate, AffiliateInputForm, AffiliateSex } from "@/types/affiliates.type";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { affiliateService } from "@/services/afiiliate.service";
 import { ClipLoader } from "react-spinners";
+import { formatDateToAPI } from "@/utils/date.utils";
 
 interface AffiliateModalProps {
-    isLoading: boolean,
-    isFetching: boolean
+    createAffiliateAsync: (data: AffiliateInputForm) => Promise<Affiliate>
+    isCreating: boolean
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
 }
 
-export function AffiliateModal({isFetching}: AffiliateModalProps) {
+export function AffiliateModal({createAffiliateAsync, isCreating, isOpen, setIsOpen}: AffiliateModalProps) {
     const {
         register,
         handleSubmit,
         reset,
         watch,
         setValue,
-        formState: { errors }
     } = useForm<AffiliateInputForm>()
 
     const handleDateChange = (date: string) => {
-        console.log('Fecha de nacimiento seleccionada',date)
         setValue('date_of_birth', date)
     }
 
@@ -37,35 +37,37 @@ export function AffiliateModal({isFetching}: AffiliateModalProps) {
 
     const onSubmit = async (data: AffiliateInputForm) => {
         try {
-            console.log('creating affiliate...')
-            await affiliateService.createAffiliate(data);
+            await createAffiliateAsync({
+                ...data,
+                date_of_birth: formatDateToAPI(data.date_of_birth)
+            });
 
             reset()
+            setIsOpen(false)
             toast.success("Afiliado agregado correctamente")
         } catch (error) {
             reset()
-            console.error('Error al agregar un afiliado', error)
             toast.error("Error al agregar el afiliado")
         }
     }
 
     return (
         <>
-            <Dialog>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <DialogTrigger asChild>
-                        <Button variant="outline" className="cursor-pointer">
-                            <Plus className="w-4 h-4" />
-                            Agregar afiliado
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent id="dialog-content">
-                        <DialogHeader className="mb-2">
-                            <DialogTitle>Agregar afiliado</DialogTitle>
-                            <DialogDescription>
-                            ¡Completa el siguiente formulario para agregar un nuevo afiliado al sistema!
-                            </DialogDescription>
-                        </DialogHeader>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className="cursor-pointer" onClick={() => setIsOpen(true)}>
+                        <Plus className="w-4 h-4" />
+                        Agregar afiliado
+                    </Button>
+                </DialogTrigger>
+                <DialogContent id="dialog-content">
+                    <DialogHeader className="mb-2">
+                        <DialogTitle>Agregar afiliado</DialogTitle>
+                        <DialogDescription>
+                        ¡Completa el siguiente formulario para agregar un nuevo afiliado al sistema!
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="grid gap-4">
                             <div className="grid gap-3">
                                 <Label htmlFor="name">Nombre</Label>
@@ -76,9 +78,11 @@ export function AffiliateModal({isFetching}: AffiliateModalProps) {
                             <div className="grid gap-3">
                                 <Label htmlFor="lastname">Apellido</Label>
                                 <Input id="lastname" placeholder="Pérez"
-                                    {...register('lastname', { required: 'El apellido es requerido' })}
+                                    {...register('last_name', { required: 'El apellido es requerido' })}
                                 />
                             </div>
+                        </div>
+                        <div className="grid gap-4 mt-4">
                             <div className="grid gap-3">
                                 <Label htmlFor="birthdate">Fecha de nacimiento</Label>
                                 <CalendarDate dateValue={watch('date_of_birth')} onChange={handleDateChange}/>
@@ -97,16 +101,16 @@ export function AffiliateModal({isFetching}: AffiliateModalProps) {
                                 />
                             </div>
                         </div>
-                        <DialogFooter>
+                        <DialogFooter className="mt-4">
                             <DialogClose asChild>
                                 <Button variant="outline">Cancelar</Button>
                             </DialogClose>
                             <Button type="submit" className="outline cursor-pointer text-white">
-                                {isFetching ? <ClipLoader color="#fff" size={20} aria-label="Cargando..." data-testid="loading-spinner"/> : 'Agregar afiliado'}
+                                {isCreating ? <ClipLoader color="#fff" size={20} aria-label="Loading..." data-testid="loading-spinner"/> : 'Agregar afiliado'}
                             </Button>
                         </DialogFooter>
-                    </DialogContent>
-                </form>
+                    </form>
+                </DialogContent>
             </Dialog>
         </>
     )

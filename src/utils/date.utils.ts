@@ -11,3 +11,7 @@ export const formatToBritishDate = (date: string): Date | undefined => {
 
     return undefined
 }
+
+export const formatDateToAPI = (date: string): string => {
+    return date.split('/').reverse().join('-')
+}

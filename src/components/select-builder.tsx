@@ -16,14 +16,21 @@ interface SelectBuilderProps<T extends EnumLike> {
   placeholder: string
   value?: string
   onChange?: (value: string) => void
+  labelMapping?: Record<string, string>
 }
 
-export function SelectBuilder<T extends EnumLike>({ options, placeholder, value, onChange }: SelectBuilderProps<T>) {
+export function SelectBuilder<T extends EnumLike>({ 
+  options, 
+  placeholder, 
+  value, 
+  onChange, 
+  labelMapping 
+}: SelectBuilderProps<T>) {
   const entries = Object.entries(options)
     .filter(([key, _]) => isNaN(Number(key)))
-    .map(([_, value]) => ({
-      label: String(value),
-      value: String(value),
+    .map(([key, value]) => ({
+      label: labelMapping?.[key] || String(value),
+      value: key,
     }))
 
   return (
@@ -34,7 +41,7 @@ export function SelectBuilder<T extends EnumLike>({ options, placeholder, value,
       <SelectContent>
         <SelectGroup>
           {entries.map((option) => (
-            <SelectItem key={option.label} value={option.value}>
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
           ))}

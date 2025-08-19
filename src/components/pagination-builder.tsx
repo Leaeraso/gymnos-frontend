@@ -15,17 +15,18 @@ export function PaginationBuilder({ page, totalPages, setPage }: Props) {
     }
 
     const isDisabled = totalPages < 2
+    const isFirstPage = page === 1
+    const isLastPage = page === totalPages
 
     return (
         <Pagination>
             <PaginationContent className="gap-2">
                 <PaginationItem>
                     <PaginationPrevious 
-                        onClick={isDisabled ? undefined : () => goToPage(page - 1)} 
-                        className={`${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                        onClick={isDisabled || isFirstPage ? undefined : () => goToPage(page - 1)} 
+                        className={`${!isDisabled && !isFirstPage ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
                     />
                 </PaginationItem>
-
                 {
                     pages[0] > 1 && (
                         <>
@@ -42,7 +43,6 @@ export function PaginationBuilder({ page, totalPages, setPage }: Props) {
                         </>
                     )
                 }
-
                 {
                     pages.map((p: number) => (
                         <PaginationItem key={p}>
@@ -52,7 +52,6 @@ export function PaginationBuilder({ page, totalPages, setPage }: Props) {
                         </PaginationItem>
                     ))
                 }
-
                 {
                     pages[pages.length - 1] < totalPages && (
                         <>
@@ -69,11 +68,10 @@ export function PaginationBuilder({ page, totalPages, setPage }: Props) {
                         </>
                     )
                 }
-
                 <PaginationItem>
                     <PaginationNext 
-                        onClick={isDisabled ? undefined : () => goToPage(page + 1)} 
-                        className={`${!isDisabled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                        onClick={isDisabled || isLastPage ? undefined : () => goToPage(page + 1)} 
+                        className={`${!isDisabled && !isLastPage ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
                     />
                 </PaginationItem>
             </PaginationContent>

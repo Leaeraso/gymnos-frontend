@@ -61,6 +61,7 @@ export function CalendarDate({ dateValue, onChange }: CalendarDateProps) {
             if (isValidDate(date)) {
               setDate(date)
               setMonth(date)
+              onChange(formatDate(date))
             }
           }}
           onKeyDown={(e) => {
@@ -99,6 +100,7 @@ export function CalendarDate({ dateValue, onChange }: CalendarDateProps) {
                   setDate(date)
                   setValue(formatDate(date))
                   setOpen(false)
+                  onChange(formatDate(date))
                 }}
               />
             </PopoverContent>

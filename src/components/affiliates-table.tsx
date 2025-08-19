@@ -17,9 +17,12 @@ import { calculateTotalPages, normalizeDate, normalizeFullName } from "@/utils/p
 import { Input } from "./ui/input";
 import { AffiliateSex } from "@/types/affiliates.type";
 import { AffiliateModal } from "./affiliate-modal";
+import { useState } from "react";
+import { GenderIcon } from "./gender-icon";
 
 export function AffiliatesTable() {
-  const { data, isLoading, isFetching, queryParams, setQueryParams } = useAffiliates()
+  const { data, queryParams, setQueryParams, createAffiliateAsync, isCreating } = useAffiliates()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const affiliates = data?.data ?? []
   const totalPages = calculateTotalPages(data?.paginate?.total!, data?.paginate?.pageSize)
@@ -36,7 +39,7 @@ export function AffiliatesTable() {
           placeholder="Buscar afiliado..."
           className="max-w-sm"
         />
-        <AffiliateModal isLoading={isLoading} isFetching={isFetching}/>
+        <AffiliateModal createAffiliateAsync={createAffiliateAsync} isCreating={isCreating} isOpen={isOpen} setIsOpen={setIsOpen}/>
       </div>
       <Table>
         <TableHeader>
@@ -64,11 +67,7 @@ export function AffiliatesTable() {
                 <TableCell className="text-left">
                   <div className="flex gap-x-1 flex-row justify-left">
                     <span>
-                      {affiliate.sex === AffiliateSex.Woman ? (
-                        <Venus className="w-5 h-5" />
-                      ) : (
-                        <Mars className="w-5 h-5" />
-                      )}
+                      <GenderIcon gender={affiliate.sex} />
                     </span>
                     <span>{normalizeFullName(affiliate.name, affiliate.last_name)}</span>
                   </div>

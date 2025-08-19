@@ -15,7 +15,7 @@ export type Affiliate = {
 
 export type AffiliateInputForm = {
     name: string,
-    lastname: string,
+    last_name: string,
     date_of_birth: string,
     dni: number,
     sex: AffiliateSex
