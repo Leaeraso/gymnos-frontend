@@ -8,8 +8,12 @@ export const config = {
 export function middleware(request: NextRequest) {
     const authToken = request.cookies.get(appConfig.ACCESS_TOKEN_COOKIE_KEY)?.value;
     const isLoginPage = request.nextUrl.pathname === appConfig.PATH_LOGIN_PAGE;
+    const isRegisterEntrancePage = request.nextUrl.pathname === appConfig.PATH_REGISTER_ENTRANCE_PAGE;
 
-    if (!authToken && !isLoginPage) {
+    if (isRegisterEntrancePage) {
+        return NextResponse.next();
+    }
+    if (!authToken && !isLoginPage && !isRegisterEntrancePage) {
         return NextResponse.redirect(new URL(appConfig.PATH_LOGIN_PAGE, request.url));
     }
 
