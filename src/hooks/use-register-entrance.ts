@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerEntrance } from "@/services/entrance/register-entrance";
+import { registerEntrance } from "@/services/entrance/register-entrance.service";
 
 export const useRegisterEntrance = () => {
   const [dni, setDni] = useState('');
