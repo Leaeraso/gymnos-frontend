@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { CreateQuotaConfigurationRequest } from '@/types/quota-configuration.type';
 import { Plus } from 'lucide-react';
+import { validateForm } from '@/hooks/quota-configuration/use-create-quota-configurations';
 
 interface CreateQuotaConfigurationModalProps {
     onSubmit: (data: CreateQuotaConfigurationRequest) => Promise<void>;
@@ -32,32 +33,14 @@ export function CreateQuotaConfigurationModal({
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const validateForm = () => {
-        const newErrors: Record<string, string> = {};
-
-        if (!formData.fee) {
-            newErrors.fee = 'La cuota es requerida';
-        } else if (isNaN(Number(formData.fee)) || Number(formData.fee) <= 0) {
-            newErrors.fee = 'La cuota debe ser un número positivo';
-        }
-
-        if (!formData.start_date) {
-            newErrors.start_date = 'La fecha de inicio es requerida';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!validateForm()) {
+        if (!validateForm(formData, setErrors)) {
             return;
         }
 
         try {
-            // Agregar hora 00:00:00 a la fecha seleccionada
             const dateWithTime = new Date(formData.start_date + 'T00:00:00');
 
             await onSubmit({
@@ -69,13 +52,11 @@ export function CreateQuotaConfigurationModal({
             setErrors({});
             setOpen(false);
         } catch {
-            // El error se maneja en el componente padre
         }
     };
 
     const handleInputChange = (field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-        // Limpiar error del campo cuando el usuario empiece a escribir
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
         }
@@ -84,7 +65,6 @@ export function CreateQuotaConfigurationModal({
     const handleOpenChange = (newOpen: boolean) => {
         setOpen(newOpen);
         if (!newOpen) {
-            // Limpiar formulario al cerrar
             setFormData({ fee: '', start_date: '' });
             setErrors({});
         }

@@ -2,9 +2,9 @@ import { useState, useCallback } from 'react';
 import { quotaConfigurationService } from '@/services/quota-configuration/quota-configuration.service';
 import { QuotaConfiguration, CreateQuotaConfigurationRequest } from '@/types/quota-configuration.type';
 
-export function useQuotaConfigurations() {
+export const useQuotaConfigurations = () => {
     const [configurations, setConfigurations] = useState<QuotaConfiguration[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [pagination, setPagination] = useState({
         page: 1,

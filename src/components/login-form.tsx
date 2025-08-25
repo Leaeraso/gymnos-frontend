@@ -18,12 +18,16 @@ export function LoginForm({
   onSubmit,
   ...props
 }: LoginFormProps) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setCredentials(prev => ({ ...prev, [id]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit({ username, password });
+    onSubmit(credentials);
   };
 
   return (
@@ -34,7 +38,7 @@ export function LoginForm({
       <div className="grid gap-6 w-90 mx-auto">
         <div className="grid gap-2">
           <Label htmlFor="username" className="text-xl">Usuario</Label>
-          <Input id="username" type="text" required value={username} onChange={(e) => setUsername(e.target.value)} />
+          <Input id="username" type="text" required value={credentials.username} onChange={handleChange} />
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -45,7 +49,7 @@ export function LoginForm({
             >
             </a>
           </div>
-          <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input id="password" type="password" required value={credentials.password} onChange={handleChange} />
         </div>
       </div>
       <div className="flex items-center justify-center gap-2">
