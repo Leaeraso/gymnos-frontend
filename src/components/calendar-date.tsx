@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { PopoverPortal } from "@radix-ui/react-popover"
-import { formatToBritishDate } from "@/utils/date.utils"
+import { formatDateInputValue, formatToBritishDate } from "@/utils/date.utils"
 
 interface CalendarDateProps {
   dateValue: string
@@ -56,8 +56,10 @@ export function CalendarDate({ dateValue, onChange }: CalendarDateProps) {
           placeholder="01/06/2025"
           className="bg-background pr-10"
           onChange={(e) => {
+            const formattedValue = formatDateInputValue(e.target.value)
+            setValue(formattedValue)
+
             const date = formatToBritishDate(e.target.value)
-            setValue(e.target.value)
             if (isValidDate(date)) {
               setDate(date)
               setMonth(date)

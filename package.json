@@ -33,6 +33,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.62.0",
     "react-hot-toast": "^2.5.2",
+    "react-input-mask-next": "^3.0.0-alpha.12",
     "react-spinners": "^0.17.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.2.0"
@@ -43,6 +44,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-input-mask": "^3.0.6",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
