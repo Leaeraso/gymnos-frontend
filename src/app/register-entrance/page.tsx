@@ -3,15 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { Toaster, toast } from "sonner";
 import { useRegisterEntrance } from "@/hooks/use-register-entrance";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export default function RegisterEntrancePage() {
   const {
     dni,
     setDni,
     isLoading,
-    error,
-    success,
     handleSubmit,
   } = useRegisterEntrance();
 
@@ -39,25 +39,14 @@ export default function RegisterEntrancePage() {
                     id="dni" 
                     type="number" 
                     required 
-                    value={dni}
+                    value={dni?.toString()}
                     onChange={(e) => setDni(e.target.value)}
-                    placeholder="Ingrese su DNI"
+                    placeholder="24555653"
                     className="text-lg h-14 text-center text-lg"
                     disabled={isLoading}
                   />
                 </div>
                 
-                {error && (
-                  <div className="text-red-500 text-center text-sm">
-                    {error}
-                  </div>
-                )}
-                
-                {success && (
-                  <div className="text-green-500 text-center text-sm">
-                    ¡Entrada registrada con éxito!
-                  </div>
-                )}
               </div>
               
               <div className="flex items-center justify-center gap-2">
@@ -66,7 +55,7 @@ export default function RegisterEntrancePage() {
                   className="w-40 h-12 text-black" 
                   disabled={isLoading || !dni}
                 >
-                  {isLoading ? "Procesando..." : "Registrar Entrada"}
+                  {isLoading ? <LoadingSpinner /> : "Registrar Entrada"}
                 </Button>
               </div>
             </form>
@@ -83,6 +72,7 @@ export default function RegisterEntrancePage() {
           priority
         />
       </div>
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
